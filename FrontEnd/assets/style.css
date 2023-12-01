@@ -207,7 +207,7 @@ footer {
 
 /** Filters **/
 
-input[type='checkbox'] {
+input[type='radio'] {
 	display: none;
 	appearance: none;
 }
