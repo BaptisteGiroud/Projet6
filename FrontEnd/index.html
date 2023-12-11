@@ -13,10 +13,25 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-	<div class="edit edition_mode">
-		<i class="fa-regular fa-pen-to-square fa-sm"></i>
-		<p>Mode édition</p>
+	<div>
+		<div class="edition_mode id_edit">
+			<i class="fa-regular fa-pen-to-square fa-sm"></i>
+			<p>Mode édition</p>
+		</div>
+		<div class="background">
+			<div class="edition_gallery">
+				<i class="fa-solid fa-xmark fa-xl"></i>
+				<div class="content_gallery">
+					<p>Galerie photo</p>
+					<div class="grid">
+	
+					</div>
+					<button type="button">Ajouter une photo</button>
+				</div>
+			</div>
+		</div>
 	</div>
+
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
@@ -40,29 +55,30 @@
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
 	</section>
+
 	<section id="portfolio">
 		<div class="edition_modifier">
 			<h2>Mes Projets</h2>
-			<div class="edit">
-				<i class="fa-regular fa-pen-to-square fa-xs"></i>
+			<div class="modify id_edit">
+				<i class="fa-regular fa-pen-to-square fa"></i>
 				<p>modifier</p>
 			</div>
 		</div>
 		<div class="filters">
 			<div class="filters_btn">
-				<input type="radio" name="filter" id="tous" checked>
+				<input type="radio" name="filter" id="tous" data-category="null" checked>
 				<label for="tous">Tous</label>
 			</div>
 			<div class="filters_btn">
-				<input type="radio" name="filter" id="objets">
+				<input type="radio" name="filter" data-category="1" id="objets">
 				<label for="objets">Objets</label>
 			</div>
 			<div class="filters_btn">
-				<input type="radio" name="filter" id="appartements">
+				<input type="radio" name="filter" data-category="2" id="appartements">
 				<label for="appartements">Appartements</label>
 			</div>
 			<div class="filters_btn">
-				<input type="radio" name="filter" id="hotels_restaurants">
+				<input type="radio" name="filter" data-category="3" id="hotels_restaurants">
 				<label for="hotels_restaurants">Hôtels & restaurants</label>
 			</div>
 		</div>

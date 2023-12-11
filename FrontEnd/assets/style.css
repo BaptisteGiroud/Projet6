@@ -58,8 +58,13 @@ body main,header {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px auto;
+	margin: 50px auto 90px auto;
 }
+
+main {
+	max-width: 950px !important;
+}
+
 section {
 	margin: 50px 0;
 }
@@ -116,11 +121,11 @@ a:hover {
 }
 #introduction img {
 	display: block;
-	margin: auto;
 	width: 80%;
 }
 
 #introduction article {
+	margin-left: -50px;
 	flex: 1
 }
 #introduction h2 {
@@ -128,7 +133,7 @@ a:hover {
 }
 
 #introduction p {
-	margin-bottom: 0.5em;
+	margin-bottom: 1.5em;
 }
 /* #portfolio h2 {
 	text-align: center;
@@ -257,7 +262,7 @@ input:checked + label{
 
 #login {
 	width: 50%;
-	margin: 200px auto;
+	margin: 15em auto;
 }
 
 #login h2{
@@ -289,15 +294,19 @@ input:checked + label{
 	cursor: pointer;
 }
 
-/** Edit mode **/
+/** -------- Edit mode -------- **/
 
-.edit {
-	display: none !important;
+.modify {
+	display: flex;
+	gap: 10px;
+	margin-right: -320px;
+	position: absolute;
+	cursor: pointer;
 }
 
-/* .filters {
-	display: none;
-} */
+.hidden {
+	display: none !important;
+}
 
 .edition_mode p {
 	font-family: 'Work Sans' ;
@@ -316,14 +325,84 @@ input:checked + label{
 }
 
 .edition_modifier {
+	align-items: center;
 	gap: 30px;
 	display: flex;
 	justify-content: center;
-	margin: 5em;
+	margin-bottom: 2em;
+	margin-top: 7em;
 }
 
 .edition_modifier .edit {
 	display: flex;
 	align-items: center;
 	gap: 10px;
+}
+
+/** Galerie photos **/
+
+.edition_gallery {
+	border: solid 1px black;
+	border-radius: 15px;
+	background-color: white;
+	width: 580px;
+	height: 600px;
+	padding: 50px;
+}
+
+.content_gallery {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	height: 95%;
+}
+
+.content_gallery button {
+	font-size: medium;
+	color: white;
+	padding: 10px 30px;
+	background-color: #1D6154;
+	border: none;
+	border-radius: 25px;
+	width: 230px;
+}
+
+.content_gallery button:hover{
+	filter: brightness(115%);
+}
+
+.content_gallery button::before{
+	margin-top: -50px;
+	margin-left: -190px;
+	position: fixed;
+	content: '';
+	border-top: 1px solid #B3B3B3;
+	padding-right: 500px;
+}
+
+.content_gallery p {
+	margin-top: -10px;
+	font-size: 26px;
+	font-family: 'Work sans';
+}
+
+.edition_gallery i {
+	margin-bottom: 30px;
+	display: flex;
+	justify-content: flex-end;
+	cursor: pointer;
+}
+
+.background {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.6);
 }
