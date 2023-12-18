@@ -61,6 +61,14 @@ header {
 	margin: 50px auto 90px auto;
 }
 
+/** header Edition **/
+
+.headerEdition {
+	margin-top: 100px !important;
+}
+
+/** end editon **/
+
 main {
 	max-width: 950px !important;
 }
@@ -102,7 +110,7 @@ nav img {
 }
 header nav li {
 	padding: 0 10px;
-	font-size: 1.2em;
+	/* font-size: 1.2em; */
 }
 
 a {
@@ -308,6 +316,10 @@ input:checked + label{
 	display: none !important;
 }
 
+.masked {
+	opacity: 0;
+}
+
 .edition_mode p {
 	font-family: 'Work Sans' ;
 	font-size: 16px;
@@ -315,6 +327,8 @@ input:checked + label{
 
 .edition_mode {
 	display: flex;
+	position: fixed;
+	margin-top: -100px;
 	align-items: center;
 	justify-content: center;
 	color: white;
@@ -342,12 +356,11 @@ input:checked + label{
 /** Galerie photos **/
 
 .edition_gallery {
-	border: solid 1px black;
 	border-radius: 15px;
 	background-color: white;
 	width: 580px;
-	height: 600px;
 	padding: 50px;
+	animation: ModalSlide 0.3s both;
 }
 
 .content_gallery {
@@ -355,10 +368,9 @@ input:checked + label{
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	height: 95%;
 }
 
-.content_gallery button {
+.edition_gallery button {
 	font-size: medium;
 	color: white;
 	padding: 10px 30px;
@@ -368,12 +380,12 @@ input:checked + label{
 	width: 230px;
 }
 
-.content_gallery button:hover{
+.edition_gallery button:hover{
 	filter: brightness(115%);
 }
 
-.content_gallery button::before{
-	margin-top: -50px;
+.edition_gallery button::before{
+	margin-top: -40px;
 	margin-left: -190px;
 	position: fixed;
 	content: '';
@@ -381,17 +393,10 @@ input:checked + label{
 	padding-right: 500px;
 }
 
-.content_gallery p {
+h3 {
 	margin-top: -10px;
 	font-size: 26px;
 	font-family: 'Work sans';
-}
-
-.edition_gallery i {
-	margin-bottom: 30px;
-	display: flex;
-	justify-content: flex-end;
-	cursor: pointer;
 }
 
 .background {
@@ -405,4 +410,178 @@ input:checked + label{
 	z-index: 1000;
 	position: fixed;
 	background-color: rgba(0, 0, 0, 0.6);
+	animation: Modalappear 0.3s both;
+}
+
+/** Modal **/
+
+.edition_gallery i {
+	cursor: pointer;
+}
+
+.edition_gallery .close_trash {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.grid {
+	display: grid;
+	width: 100%;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	gap: 10px;
+	/* overflow: scroll; */
+	margin-bottom: 50px;
+	margin-top: 40px;
+}
+
+.grid img {
+	height: 100%;
+	width: 100%;
+	margin-top: -30px;
+}
+
+.removedProject {
+	position: relative;
+	z-index: 1000;
+	margin-left: 80px;
+	border-radius: 5px;
+	margin-top: 10px;
+	color: white;
+	padding: 10px 5px;
+	background-color: black;
+}
+
+
+/** Add Project **/
+
+.content_addWork {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.content_addWork form {
+	display: flex;
+	width: 100%;
+	max-width: 420px;
+	flex-direction: column;
+	margin-top: 40px;
+	margin-bottom: 80px;
+	font-family: 'Work sans';
+	color: #3D3D3D;
+	font-size: 14px;
+}
+
+.content_addWork input,select {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.content_addWork input,select {
+	height: 50px;
+	border: none;
+	padding-left: 10px;
+	box-shadow: 1px 3px 5px 2px rgba(0, 0, 0, .08);
+}
+
+#btnAddPhoto {
+	color: #306685;
+	text-align: center;
+	width: 140px;
+	border-radius: 20px;
+	background-color: #CBD6DC;
+	padding: 10px;
+	left: 260px;
+	top: 240px;
+	z-index: 1000;
+	position: absolute;
+	cursor: pointer;
+}
+
+#imgfile {
+	color:rgba(0,0,0,0);
+	height: 170px;
+	box-shadow: none;
+	background-color: #E8F1F6;
+}
+
+form ::-webkit-file-upload-button {
+	display: none;
+}
+
+.content_addWork button::before {
+	margin-left: -225px;
+}
+
+.infoImg {
+	position: absolute;
+	top: 280px;
+	left: 295px;
+	font-size: x-small;
+}
+
+.fa-image {
+	transform: scale(2.5);
+	position: absolute;
+	top: 195px;
+	left: calc(50% - 15px);
+}
+
+
+/** Animation **/
+
+.modalDisappear {
+	animation: Modaldisappear 0.3s both;
+}
+
+.modalSlideOff {
+	animation: ModalSlideOff 0.3s both;
+}
+
+.errorImg {
+	border: solid red 1px !important;
+}
+
+.errorImg::before {
+	margin-left: -6px;
+	color: red;
+	z-index: 1000;
+	content: 'Fichier invalide';
+	font-size: x-small;
+	position: absolute;
+}
+
+.errorTitle {
+	border: solid red 1px !important;
+}
+
+.errorTitle::before {
+	margin-left: -6px;
+	color: red;
+	z-index: 1000;
+	content: 'Champ manquant';
+	font-size: x-small;
+	position: absolute;
+}
+
+@keyframes Modalappear {
+	from {opacity: 0;}
+	to {opacity: 1;}
+}
+
+@keyframes ModalSlide {
+	from {transform: translateX(-50px);}
+	to {transform: translateX(0px);}
+}
+
+@keyframes Modaldisappear {
+	from {opacity: 1;}
+	to {opacity: 0;}
+}
+
+@keyframes ModalSlideOff {
+	from {transform: translateX(0px);}
+	to {transform: translateX(50px);}
 }

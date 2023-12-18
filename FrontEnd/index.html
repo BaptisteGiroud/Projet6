@@ -20,13 +20,31 @@
 		</div>
 		<div class="background">
 			<div class="edition_gallery">
-				<i class="fa-solid fa-xmark fa-xl"></i>
+				<div class="close_trash">
+					<i class="fa-solid fa-arrow-left fa-xl masked"></i>
+					<i class="fa-solid fa-xmark fa-gl"></i>
+				</div>
 				<div class="content_gallery">
-					<p>Galerie photo</p>
+					<h3>Galerie photo</h3>
 					<div class="grid">
 	
 					</div>
-					<button type="button">Ajouter une photo</button>
+					<button type="button" id="add_photo">Ajouter une photo</button>
+				</div>
+				<div class="content_addWork hidden">
+					<h3>Ajout photo</h3>
+					<form>
+						<i class="fa-regular fa-image fa-2xl" style="color: #CBD6DC;"></i>
+						<p class="infoImg">jpg, png : 4mo max</p>
+						<label for="imgfile" id="btnAddPhoto">+ Ajouter photo</label>
+						<input type="file" id="imgfile" name="imgfile">
+						<label for="imgtitle">Titre</label>
+						<input type="text" id="imgtitle" name="imgtitle">
+						<label for="selectCategory">Catégorie</label>
+						<select name="category" id="selectCategory">
+						</select>
+					</form>
+					<button type="button" id="send_request">Valider</button>
 				</div>
 			</div>
 		</div>
@@ -38,7 +56,7 @@
 		<ul>
 			<li><a href="#portfolio">projets</a></li>
 			<li><a href="#contact">contact</a></li>
-			<li><a href="./login.html">login</a></li>
+			<li id="logInOut"><a href="./login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -68,18 +86,6 @@
 			<div class="filters_btn">
 				<input type="radio" name="filter" id="tous" data-category="null" checked>
 				<label for="tous">Tous</label>
-			</div>
-			<div class="filters_btn">
-				<input type="radio" name="filter" data-category="1" id="objets">
-				<label for="objets">Objets</label>
-			</div>
-			<div class="filters_btn">
-				<input type="radio" name="filter" data-category="2" id="appartements">
-				<label for="appartements">Appartements</label>
-			</div>
-			<div class="filters_btn">
-				<input type="radio" name="filter" data-category="3" id="hotels_restaurants">
-				<label for="hotels_restaurants">Hôtels & restaurants</label>
 			</div>
 		</div>
 		<div class="gallery">
