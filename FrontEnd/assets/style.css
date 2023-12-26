@@ -464,11 +464,9 @@ h3 {
 
 .content_addWork form {
 	display: flex;
-	width: 100%;
-	max-width: 420px;
+	width: 450px;
 	flex-direction: column;
-	margin-top: 40px;
-	margin-bottom: 80px;
+	margin: 40px 0 50px -20px;
 	font-family: 'Work sans';
 	color: #3D3D3D;
 	font-size: 14px;
@@ -476,14 +474,20 @@ h3 {
 
 .content_addWork input,select {
 	margin-top: 10px;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 .content_addWork input,select {
+	width: 100%;
 	height: 50px;
 	border: none;
-	padding-left: 10px;
+	padding: 0 10px;
 	box-shadow: 1px 3px 5px 2px rgba(0, 0, 0, .08);
+	cursor: pointer;
+}
+
+#selectCategory {
+	width: 470px;
 }
 
 #btnAddPhoto {
@@ -493,9 +497,9 @@ h3 {
 	border-radius: 20px;
 	background-color: #CBD6DC;
 	padding: 10px;
-	left: 260px;
+	left: 255px;
 	top: 240px;
-	z-index: 1000;
+	z-index: 1;
 	position: absolute;
 	cursor: pointer;
 }
@@ -505,6 +509,15 @@ h3 {
 	height: 170px;
 	box-shadow: none;
 	background-color: #E8F1F6;
+}
+
+#previewImg {
+	z-index: 5;
+	position: absolute;
+	height: 170px;
+	max-width: 432px;
+	margin-top: 10px;
+	margin-left: 25%;
 }
 
 form ::-webkit-file-upload-button {
@@ -518,7 +531,7 @@ form ::-webkit-file-upload-button {
 .infoImg {
 	position: absolute;
 	top: 280px;
-	left: 295px;
+	left: 290px;
 	font-size: x-small;
 }
 
@@ -526,7 +539,7 @@ form ::-webkit-file-upload-button {
 	transform: scale(2.5);
 	position: absolute;
 	top: 195px;
-	left: calc(50% - 15px);
+	left: calc(50% - 20px);
 }
 
 
@@ -548,7 +561,7 @@ form ::-webkit-file-upload-button {
 	margin-left: -6px;
 	color: red;
 	z-index: 1000;
-	content: 'Fichier invalide';
+	content: 'Fichier manquant';
 	font-size: x-small;
 	position: absolute;
 }
@@ -557,8 +570,9 @@ form ::-webkit-file-upload-button {
 	border: solid red 1px !important;
 }
 
-.errorTitle::before {
-	margin-left: -6px;
+.errorTitleDiv::before {
+	margin-top: 12px;
+	margin-left: 5px;
 	color: red;
 	z-index: 1000;
 	content: 'Champ manquant';

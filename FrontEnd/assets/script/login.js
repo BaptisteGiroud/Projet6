@@ -29,7 +29,7 @@ loginButton.addEventListener("click", (event) => {
     event.preventDefault()
     loginRequest().then((response) => {
         if (response.error || response.message){
-            alert("Login failed")
+            alert("Echec de connexion")
         } else {
             window.localStorage.setItem("token", response.token)
             location = "./index.html"

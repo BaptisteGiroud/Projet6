@@ -33,13 +33,14 @@
 				</div>
 				<div class="content_addWork hidden">
 					<h3>Ajout photo</h3>
-					<form>
+					<form id="requestAddProject">
 						<i class="fa-regular fa-image fa-2xl" style="color: #CBD6DC;"></i>
+						<img id="previewImg">
 						<p class="infoImg">jpg, png : 4mo max</p>
 						<label for="imgfile" id="btnAddPhoto">+ Ajouter photo</label>
 						<input type="file" id="imgfile" name="imgfile">
 						<label for="imgtitle">Titre</label>
-						<input type="text" id="imgtitle" name="imgtitle">
+						<span class="inputTitle"><input type="text" id="imgtitle" name="imgtitle"></span>
 						<label for="selectCategory">Catégorie</label>
 						<select name="category" id="selectCategory">
 						</select>

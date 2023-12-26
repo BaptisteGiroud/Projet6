@@ -37,7 +37,7 @@ function displayPortfolio(works, isEdit = false){
             <i class="fa-solid fa-trash-can fa-xs removedProject"></i>
             <img src="${imageUrl}" alt="${title}">
             </figure>`)
-        
+        // removedProject()
         } else {
             gallery.insertAdjacentHTML("beforeend", `
             <figure>
@@ -46,7 +46,6 @@ function displayPortfolio(works, isEdit = false){
             </figure>`)
         }
     }
-    // removedProject()
 }
 
 async function getProjects(){
@@ -137,7 +136,7 @@ function removedProject() {
             let selectProjectId = buttonSup.parentElement.dataset.id
             let requestRemoved = fetch(`http://localhost:5678/api/works/${selectProjectId}`, {
                 method: "DELETE",
-                headers: {Authorization: `Bearer ${token}`},
+                headers: {"Authorization": `Bearer ${token}`},
             })
         })
     })
@@ -149,7 +148,12 @@ let buttonAddPhoto = document.getElementById("add_photo")
 let content_addWork = document.querySelector(".content_addWork")
 let returnModalGallery = document.querySelector(".fa-arrow-left")
 let selectCategories = document.getElementById("selectCategory")
+let imgTitle = document.getElementById("imgtitle")
 
+let imgCategory = document.getElementById("selectCategory")
+let imgFile = document.getElementById("imgfile")
+let btnValid = document.getElementById("send_request")
+let spanTitle = document.querySelector(".inputTitle")
 
 function addProject(categories) {
     buttonAddPhoto.addEventListener("click", (event)=> {
@@ -167,41 +171,82 @@ function addProject(categories) {
     /* Ajout Options SelectBar Category */
     for (i = 0; i < categories.length; i++){
     selectCategories.insertAdjacentHTML("beforeend", `
-    <option value="${categories[i].name}">${categories[i].name}</option>`)
+    <option value="${categories[i].id}">${categories[i].name}</option>`)
     }
 
-    /* Formulaire AddProject */
-    let formDataAddPhoto = new FormData()
-    let imgTitle = document.getElementById("imgtitle")
-    let imgCategory = document.getElementById("selectCategory")
-    let imgFile = document.getElementById("imgfile")
-    let btnValid = document.getElementById("send_request")
+    
+    /** Preview Img */
+    imgFile.addEventListener("change", () => {
+    previewFile()
+    })
 
-    formDataAddPhoto.append("title", `${imgTitle.value}`)
-    formDataAddPhoto.append("category", `${imgCategory.value}`)
-    formDataAddPhoto.append("image", `${imgFile}.files`)
-
-
+    /** Gestion Form */
     btnValid.addEventListener("click", () => {
         if (imgFile.files.length == 0){
             imgFile.classList.add("errorImg")
+            console.log("Fichier manquant")
         } else {
             imgFile.classList.remove("errorImg")  
         }
         if (imgTitle.value == ""){
-            imgTitle.classList.add("errorTitle")
+            imgTitle.classList.add("errorTitle", "errorTitleDiv")
+            spanTitle.classList.add("errorTitleDiv")
+            console.log("Titre manquant")
         } else {
             imgTitle.classList.remove("errorTitle")
+            spanTitle.classList.remove("errorTitleDiv")
         }
         if (imgFile.files.length != 0 && imgTitle.value != ""){
-            console.log(imgFile.files)
-            console.log(imgTitle.value)
-            console.log(imgCategory.value)
-            console.log(token)
+            postRequest()
         }
     })
 }
 
+function previewFile() {
+    let imgFile = document.getElementById("imgfile")
+    let file = imgFile.files
+    if (file.length > 0){
+        let reader = new FileReader()
+
+        reader.onload = function (event) {
+            document.getElementById("previewImg").setAttribute("src", reader.result)
+        }
+        imgFile.style.zIndex = "3"
+        reader.readAsDataURL(file[0])
+    }
+}
+
+
+async function postRequest() {
+    let imgFile = document.getElementById("imgfile").files[0]
+    // let base64 = document.getElementById("previewImg").src
+    // let buffer = new ArrayBuffer(base64)
+    // console.log(buffer)
+    console.log(imgFile)
+
+
+    let formDataAdd = new FormData()
+    formDataAdd.append("image", `${imgFile}`)
+    formDataAdd.append("title", `${imgTitle.value}`)
+    formDataAdd.append("category", `${parseInt(imgCategory.value)}`)
+
+
+    let requestAddProject = Array.from(formDataAdd)
+    let form = JSON.stringify(requestAddProject)
+    console.log(formDataAdd)
+    console.log(requestAddProject)
+    console.log(form)
+
+
+    let responseRequest = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {"Authorization": `Bearer ${token}`},
+        body: form
+    }).then(response => {
+        console.log(response)
+    })
+
+}
 
 // MAIN // 
 
@@ -231,58 +276,4 @@ getProjects().then((works) => {
         })        
     })
 })
-
-
-
-/** Filters **/
-
-// let btnTous = document.getElementById("tous")
-// let btnObjets = document.getElementById("objets")
-// let btnAppartements = document.getElementById("appartements")
-// let btnHotelRestaurants = document.getElementById("hotels_restaurants")
-
-
-
-// async function filterTous(works){
-//     let btnTousFilter = btnTous.addEventListener("click", function () {
-//         let tous = projectsListe.filter(function (projectsListe){
-//             return projectsListe.id >= 0;
-//         })
-//         cleansPortfolio()
-//         displayPortfolio(tous)
-//     })
-// }
-
-// async function filterObjets(works){
-//     projectsListe = await works
-//     let btnObjetsFilter = btnObjets.addEventListener("click", function () {
-//         let objets = projectsListe.filter(function (projectsListe){
-//             return projectsListe.category.name == "Objets";
-//         })
-//         cleansPortfolio()
-//         displayPortfolio(objets)
-//     })
-// }
-
-// async function filterAppart(works){
-//     projectsListe = await works
-//     let btnAppartementsFilter = btnAppartements.addEventListener("click", function () {
-//         let appartements = projectsListe.filter(function (projectsListe){
-//             return projectsListe.category.name == "Appartements";
-//         })
-//         cleansPortfolio()
-//         displayPortfolio(appartements)
-//     })
-// }
-
-// async function filterHotelsRestau(works){
-//     projectsListe = await works
-//     let btnHotelRestauFilter = btnHotelRestaurants.addEventListener("click", function () {
-//         let hotelsRestau = projectsListe.filter(function (projectsListe){
-//             return projectsListe.category.name == "Hotels & restaurants";
-//         })
-//         cleansPortfolio()
-//         displayPortfolio(hotelsRestau)
-//     })
-// }
 
