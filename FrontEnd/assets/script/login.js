@@ -29,7 +29,8 @@ loginButton.addEventListener("click", (event) => {
     event.preventDefault()
     loginRequest().then((response) => {
         if (response.error || response.message){
-            alert("Echec de connexion")
+            // alert("Echec de connexion")
+            animationEchec()
         } else {
             window.localStorage.setItem("token", response.token)
             location = "./index.html"
@@ -37,3 +38,11 @@ loginButton.addEventListener("click", (event) => {
     })
 })
 
+function animationEchec(){
+    passwordInput.classList.add("loginFailed")
+    emailInput.classList.add("loginFailed")
+    window.setTimeout(function (){
+        passwordInput.classList.remove("loginFailed")
+        emailInput.classList.remove("loginFailed")
+    }, 500) 
+}

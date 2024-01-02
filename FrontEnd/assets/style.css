@@ -152,10 +152,12 @@ a:hover {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+	grid-row-gap: 30px;
 }
 
 .gallery img {
+	height: 100%;
+	object-fit: cover;
 	width: 100%;
 
 }
@@ -430,13 +432,15 @@ h3 {
 	display: grid;
 	width: 100%;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	gap: 10px;
+	grid-column-gap: 10px;
+	grid-row-gap: 35px;
 	/* overflow: scroll; */
 	margin-bottom: 50px;
-	margin-top: 40px;
+	margin-top: 30px;
 }
 
 .grid img {
+	object-fit: cover;
 	height: 100%;
 	width: 100%;
 	margin-top: -30px;
@@ -533,6 +537,7 @@ form ::-webkit-file-upload-button {
 	top: 280px;
 	left: 290px;
 	font-size: x-small;
+	z-index: 1;
 }
 
 .fa-image {
@@ -540,6 +545,7 @@ form ::-webkit-file-upload-button {
 	position: absolute;
 	top: 195px;
 	left: calc(50% - 20px);
+	z-index: 1;
 }
 
 
@@ -554,20 +560,20 @@ form ::-webkit-file-upload-button {
 }
 
 .errorImg {
-	border: solid red 1px !important;
+	outline: solid red 1px !important;
 }
 
 .errorImg::before {
 	margin-left: -6px;
 	color: red;
 	z-index: 1000;
-	content: 'Fichier manquant';
+	content: 'Fichier invalide ou manquant';
 	font-size: x-small;
 	position: absolute;
 }
 
 .errorTitle {
-	border: solid red 1px !important;
+	outline: solid red 1px !important;
 }
 
 .errorTitleDiv::before {
@@ -598,4 +604,42 @@ form ::-webkit-file-upload-button {
 @keyframes ModalSlideOff {
 	from {transform: translateX(0px);}
 	to {transform: translateX(50px);}
+}
+
+/** Animation Login failed */
+
+.loginFailed {
+	animation: loginfailed 0.5s both;
+	border: solid 1px red !important;
+}
+
+@keyframes loginfailed {
+	0% {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	17% {
+		margin-left: -15px;
+		margin-right: 15px;
+	}
+	34% {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	51% {
+		margin-left: -15px;
+		margin-right: 15px;
+	}
+	68% {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	85% {
+		margin-left: -15px;
+		margin-right: 15px;
+	}
+	100% {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
 }

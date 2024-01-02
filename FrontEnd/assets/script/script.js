@@ -37,7 +37,7 @@ function displayPortfolio(works, isEdit = false){
             <i class="fa-solid fa-trash-can fa-xs removedProject"></i>
             <img src="${imageUrl}" alt="${title}">
             </figure>`)
-        // removedProject()
+        removedProject()
         } else {
             gallery.insertAdjacentHTML("beforeend", `
             <figure>
@@ -101,31 +101,36 @@ btnEdition.addEventListener("click", (event) => {
     })
 })
 
-markEdition.addEventListener("click", (event) => {
+function closeModal(){
     modalModule.classList.add("modalSlideOff")
     modal.classList.add("modalDisappear")
+    cleansFormPost()
     window.setTimeout(function (){
         modal.classList.add("hidden")
         /* Retour first Modal */
         modalContent.classList.remove("hidden")
         content_addWork.classList.add("hidden")
         returnModalGallery.classList.add("masked") 
-    }, 300)   
+    }, 300)    
+}
+
+function cleansFormPost() {
+    document.getElementById("previewImg").src = ""
+    document.getElementById("imgfile").value = ""
+    imgTitle.value = ""
+    imgFile.style.zIndex = "0"
+}
+
+markEdition.addEventListener("click", (event) => {
+    closeModal()
 })
 
 document.addEventListener("click", (event) => {
     if (event.target == modal) {
-        modalModule.classList.add("modalSlideOff")
-        modal.classList.add("modalDisappear")
-        window.setTimeout(function (){
-            modal.classList.add("hidden")
-            /* Retour first Modal */
-            modalContent.classList.remove("hidden")
-            content_addWork.classList.add("hidden")
-            returnModalGallery.classList.add("masked") 
-        }, 300)      
+        closeModal()   
     }
 })
+
 
 // Removed Project //
 
@@ -137,6 +142,11 @@ function removedProject() {
             let requestRemoved = fetch(`http://localhost:5678/api/works/${selectProjectId}`, {
                 method: "DELETE",
                 headers: {"Authorization": `Bearer ${token}`},
+            })
+            buttonSup.parentElement.remove()
+            getProjects().then((works) => {
+                cleansPortfolio()
+                displayPortfolio(works)
             })
         })
     })
@@ -164,7 +174,8 @@ function addProject(categories) {
     returnModalGallery.addEventListener("click", ()=> {
         modalContent.classList.remove("hidden")
         content_addWork.classList.add("hidden")
-        returnModalGallery.classList.add("masked")        
+        returnModalGallery.classList.add("masked")
+        cleansFormPost()        
     })
 
 
@@ -180,9 +191,12 @@ function addProject(categories) {
     previewFile()
     })
 
+
     /** Gestion Form */
     btnValid.addEventListener("click", () => {
-        if (imgFile.files.length == 0){
+        let imgFile = document.getElementById("imgfile")
+        let file = imgFile.files
+        if (imgFile.files.length === 0 || file[0].type !== "image/png" || file[0].size >= 4000000){
             imgFile.classList.add("errorImg")
             console.log("Fichier manquant")
         } else {
@@ -196,7 +210,7 @@ function addProject(categories) {
             imgTitle.classList.remove("errorTitle")
             spanTitle.classList.remove("errorTitleDiv")
         }
-        if (imgFile.files.length != 0 && imgTitle.value != ""){
+        if (imgFile.files.length !== 0 && imgTitle.value != ""){
             postRequest()
         }
     })
@@ -210,42 +224,46 @@ function previewFile() {
 
         reader.onload = function (event) {
             document.getElementById("previewImg").setAttribute("src", reader.result)
+            imgFile.style.zIndex = "3"
         }
-        imgFile.style.zIndex = "3"
+        
         reader.readAsDataURL(file[0])
+    } else {
+        document.getElementById("previewImg").setAttribute("src", "")
+        imgFile.style.zIndex = "0"
     }
 }
 
 
 async function postRequest() {
-    let imgFile = document.getElementById("imgfile").files[0]
-    // let base64 = document.getElementById("previewImg").src
-    // let buffer = new ArrayBuffer(base64)
-    // console.log(buffer)
-    console.log(imgFile)
-
+    let imgFileAdd = document.getElementById("imgfile").files[0]
 
     let formDataAdd = new FormData()
-    formDataAdd.append("image", `${imgFile}`)
-    formDataAdd.append("title", `${imgTitle.value}`)
-    formDataAdd.append("category", `${parseInt(imgCategory.value)}`)
-
-
-    let requestAddProject = Array.from(formDataAdd)
-    let form = JSON.stringify(requestAddProject)
-    console.log(formDataAdd)
-    console.log(requestAddProject)
-    console.log(form)
-
+    formDataAdd.append("image", imgFileAdd)
+    formDataAdd.append("title", imgTitle.value)
+    formDataAdd.append("category", parseInt(imgCategory.value))
 
     let responseRequest = await fetch("http://localhost:5678/api/works", {
         method: "POST",
         headers: {"Authorization": `Bearer ${token}`},
-        body: form
+        body: formDataAdd
     }).then(response => {
-        console.log(response)
+        if (response.ok){
+            modalContent.classList.remove("hidden")
+            content_addWork.classList.add("hidden")
+            returnModalGallery.classList.add("masked")
+            cleansFormPost()     
+            getProjects().then((works) => {
+                cleansPortfolio()
+                displayPortfolio(works)
+                cleansPortfolio(true)
+                displayPortfolio(works, true)
+            })
+            alert("Post réussi !")
+        } else {
+            alert("Echec du Post")
+        }
     })
-
 }
 
 // MAIN // 
