@@ -153,6 +153,7 @@ a:hover {
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 30px;
+	margin-bottom: 80px;
 }
 
 .gallery img {
@@ -302,6 +303,12 @@ input:checked + label{
 .btn:hover {
 	filter: brightness(115%);
 	cursor: pointer;
+}
+
+#loginStatus {
+	position: absolute;
+	color: red;
+	text-decoration: none !important;
 }
 
 /** -------- Edit mode -------- **/

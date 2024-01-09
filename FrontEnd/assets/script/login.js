@@ -1,5 +1,9 @@
+loginStatus = document.getElementById("loginStatus")
 
-window.localStorage.removeItem("token")
+if (window.localStorage.length !== 0){
+    window.localStorage.removeItem("token")
+    loginStatus.innerText = "Vous avez été déconnecté"
+}
 
 let loginButton = document.querySelector(" .btn")
 let passwordInput = document.getElementById("password")
@@ -27,15 +31,20 @@ async function loginRequest(){
 
 loginButton.addEventListener("click", (event) => {
     event.preventDefault()
-    loginRequest().then((response) => {
-        if (response.error || response.message){
-            // alert("Echec de connexion")
-            animationEchec()
-        } else {
-            window.localStorage.setItem("token", response.token)
-            location = "./index.html"
-        }
-    })
+    if (emailInput.value === "" || passwordInput.value === ""){    
+        loginStatus.innerText = "Champs invalides ou manquants"
+    } else {
+        loginStatus.innerText = ""
+        loginRequest().then((response) => {
+            if (response.error || response.message){
+                // alert("Echec de connexion")
+                animationEchec()
+            } else {
+                window.localStorage.setItem("token", response.token)
+                location = "./index.html"
+            }
+        })
+    }
 })
 
 function animationEchec(){

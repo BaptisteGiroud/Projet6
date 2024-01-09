@@ -88,6 +88,7 @@ if (token == null){
     }
     header.classList.add("headerEdition")
     logInOut.innerHTML = `<li id="logInOut"><a href="./login.html">logout</a></li>`
+    filters.style.display = "none"
 }
 
 // Open close Modal //
@@ -147,6 +148,7 @@ function removedProject() {
             getProjects().then((works) => {
                 cleansPortfolio()
                 displayPortfolio(works)
+                filterDynamique(works)
             })
         })
     })
@@ -198,14 +200,12 @@ function addProject(categories) {
         let file = imgFile.files
         if (imgFile.files.length === 0 || file[0].type !== "image/png" || file[0].size >= 4000000){
             imgFile.classList.add("errorImg")
-            console.log("Fichier manquant")
         } else {
             imgFile.classList.remove("errorImg")  
         }
         if (imgTitle.value == ""){
-            imgTitle.classList.add("errorTitle", "errorTitleDiv")
+            imgTitle.classList.add("errorTitle")
             spanTitle.classList.add("errorTitleDiv")
-            console.log("Titre manquant")
         } else {
             imgTitle.classList.remove("errorTitle")
             spanTitle.classList.remove("errorTitleDiv")
@@ -258,6 +258,7 @@ async function postRequest() {
                 displayPortfolio(works)
                 cleansPortfolio(true)
                 displayPortfolio(works, true)
+                filterDynamique(works)
             })
             alert("Post réussi !")
         } else {
@@ -265,6 +266,28 @@ async function postRequest() {
         }
     })
 }
+
+/** Filter dynamique */
+
+function filterDynamique(works){
+    let buttonsFilters = document.querySelectorAll(".filters input")
+
+    buttonsFilters.forEach((buttonsFilters) => {
+        buttonsFilters.addEventListener("click", (event) => {
+            let filterWorks = works
+            let currentFilter = event.currentTarget
+
+            if (currentFilter.dataset.category !== "null") {
+                filterWorks = works.filter(function (works){
+                    return currentFilter.dataset.category == parseInt(works.category.id);
+                })
+            }
+            cleansPortfolio()
+            displayPortfolio(filterWorks)
+        })
+    })
+}
+
 
 // MAIN // 
 
@@ -276,22 +299,7 @@ getProjects().then((works) => {
     getCategories().then((categories) => {
         displayFilters(categories)
         addProject(categories)
-        let buttonsFilters = document.querySelectorAll(".filters input")
-
-        buttonsFilters.forEach((buttonsFilters) => {
-            buttonsFilters.addEventListener("click", (event) => {
-                let filterWorks = works
-                let currentFilter = event.currentTarget
-
-                if (currentFilter.dataset.category !== "null") {
-                    filterWorks = works.filter(function (works){
-                        return currentFilter.dataset.category == parseInt(works.category.id);
-                    })
-                }
-                cleansPortfolio()
-                displayPortfolio(filterWorks)
-            })
-        })        
+        filterDynamique(works)
     })
 })
 
