@@ -198,7 +198,7 @@ function addProject(categories) {
     btnValid.addEventListener("click", () => {
         let imgFile = document.getElementById("imgfile")
         let file = imgFile.files
-        if (imgFile.files.length === 0 || file[0].type !== "image/png" || file[0].size >= 4000000){
+        if (imgFile.files.length === 0 || file[0].size >= 4000000){
             imgFile.classList.add("errorImg")
         } else {
             imgFile.classList.remove("errorImg")  

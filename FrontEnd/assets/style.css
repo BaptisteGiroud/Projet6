@@ -103,6 +103,7 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
+	font-size: 1rem;
 
 }
 nav img {
@@ -523,10 +524,11 @@ h3 {
 }
 
 #previewImg {
+	object-fit: cover;
 	z-index: 5;
 	position: absolute;
 	height: 170px;
-	max-width: 432px;
+	max-width: 120px;
 	margin-top: 10px;
 	margin-left: 25%;
 }
